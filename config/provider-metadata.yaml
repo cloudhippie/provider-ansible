@@ -1,0 +1,111 @@
+name: ansible/ansible
+resources:
+    ansible_group:
+        subCategory: ""
+        name: ansible_group
+        title: ansible_group Resource - terraform-provider-ansible
+        examples:
+            - name: group
+              manifest: |-
+                {
+                  "children": [
+                    "somechild"
+                  ],
+                  "name": "somegroup",
+                  "variables": {
+                    "hello": "from group!"
+                  }
+                }
+        argumentDocs:
+            children: (List of String) List of group children.
+            id: (String) The ID of this resource.
+            name: (String) Name of the group.
+            variables: (Map of String) Map of variables.
+        importStatements: []
+    ansible_host:
+        subCategory: ""
+        name: ansible_host
+        title: ansible_host Resource - terraform-provider-ansible
+        examples:
+            - name: host
+              manifest: |-
+                {
+                  "groups": [
+                    "somegroup"
+                  ],
+                  "name": "somehost",
+                  "variables": {
+                    "greetings": "from host!",
+                    "some": "variable",
+                    "yaml_hello": "${local.decoded_vault_yaml.hello}",
+                    "yaml_list": "${jsonencode(local.decoded_vault_yaml.a_list)}",
+                    "yaml_number": "${local.decoded_vault_yaml.a_number}"
+                  }
+                }
+        argumentDocs:
+            groups: (List of String) List of group names.
+            id: (String) The ID of this resource.
+            name: (String) Name of the host.
+            variables: (Map of String) Map of variables.
+        importStatements: []
+    ansible_playbook:
+        subCategory: ""
+        name: ansible_playbook
+        title: ansible_playbook Resource - terraform-provider-ansible
+        examples:
+            - name: playbook
+              manifest: |-
+                {
+                  "extra_vars": {
+                    "var_a": "Some variable",
+                    "var_b": "Another variable"
+                  },
+                  "name": "host-1.example.com",
+                  "playbook": "playbook.yml",
+                  "replayable": true
+                }
+        argumentDocs:
+            ansible_playbook_binary: (String) Path to ansible-playbook executable (binary).
+            ansible_playbook_stderr: (String) An ansible-playbook CLI stderr output.
+            ansible_playbook_stdout: (String) An ansible-playbook CLI stdout output.
+            args: (List of String) Used to build arguments to run Ansible playbook with.
+            check_mode: (Boolean) If 'true', playbook execution won't make any changes but only change predictions will be made.
+            create: (String)
+            diff_mode: (Boolean) If 'true', when changing (small) files and templates, differences in those files will be shown. Recommended usage with 'check_mode'.
+            extra_vars: '(Map of String) A map of additional variables as: { key-1 = value-1, key-2 = value-2, ... }.'
+            force_handlers: (Boolean) If 'true', run handlers even if a task fails.
+            groups: (List of String) List of desired groups of hosts on which the playbook will be executed.
+            id: (String) The ID of this resource.
+            ignore_playbook_failure: (Boolean) This parameter is good for testing. Set to 'true' if the desired playbook is meant to fail, but still want the resource to run successfully.
+            limit: (List of String) List of hosts to exclude from the playbook execution.
+            name: (String) Name of the desired host on which the playbook will be executed.
+            playbook: (String) Path to ansible playbook.
+            replayable: (Boolean) If 'true', the playbook will be executed on every 'terraform apply' and with that, the resource will be recreated. If 'false', the playbook will be executed only on the first 'terraform apply'. Note, that if set to 'true', when doing 'terraform destroy', it might not show in the destroy output, even though the resource still gets destroyed.
+            tags: (List of String) List of tags of plays and tasks to run.
+            temp_inventory_file: (String) Path to created temporary inventory file.
+            timeouts: (Block, Optional) (see below for nested schema)
+            var_files: (List of String) List of variable files.
+            vault_files: (List of String) List of vault files.
+            vault_id: (String) ID of the desired vault(s).
+            vault_password_file: (String) Path to a vault password file.
+            verbosity: (Number) A verbosity level between 0 and 6. Set ansible 'verbose' parameter, which causes Ansible to print more debug messages. The higher the 'verbosity', the more debug details will be printed.
+        importStatements: []
+    ansible_vault:
+        subCategory: ""
+        name: ansible_vault
+        title: ansible_vault Resource - terraform-provider-ansible
+        examples:
+            - name: secrets
+              manifest: |-
+                {
+                  "vault_file": "vault.yml",
+                  "vault_password_file": "/path/to/file"
+                }
+        argumentDocs:
+            args: (List of String)
+            id: (String) The ID of this resource.
+            vault_file: (String) Path to encrypted vault file.
+            vault_id: (String) ID of the encrypted vault file.
+            vault_password_file: (String) Path to vault password file.
+            yaml: (String, Sensitive)
+        importStatements: []

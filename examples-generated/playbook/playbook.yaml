@@ -1,0 +1,16 @@
+apiVersion: playbook.crossplane.io/v1alpha1
+kind: Playbook
+metadata:
+  annotations:
+    meta.upbound.io/example-id: playbook/v1alpha1/playbook
+  labels:
+    testing.upbound.io/example-name: playbook
+  name: playbook
+spec:
+  forProvider:
+    extraVars:
+      var_a: Some variable
+      var_b: Another variable
+    name: host-1.example.com
+    playbook: playbook.yml
+    replayable: true
